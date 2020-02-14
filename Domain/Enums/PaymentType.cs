@@ -11,6 +11,8 @@ namespace Domain.Enums
         DebitCard,
         [Description("Boleto")]
         Boleto,
+        [Description("QR Code")]
+        Qrcode,
         [Description("Transferência Eletrônica")]
         EletronicTransfer
     }
