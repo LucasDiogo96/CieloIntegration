@@ -62,14 +62,15 @@ namespace CieloServices
             });
             #endregion
 
-            var config = Configuration.GetSection("AppSettings").Get<AppSettingsModel>();
-            app.UseAuthenticationMiddleware(config);
-
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+
+            var config = Configuration.GetSection("AppSettings").Get<AppSettingsModel>();
+            app.UseAuthenticationMiddleware(config);
 
             app.UseEndpoints(endpoints =>
             {
