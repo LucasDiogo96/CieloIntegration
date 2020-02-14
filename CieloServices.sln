@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CieloServices", "CieloServices\CieloServices.csproj", "{67A9B055-AC38-424B-8A54-8EFB5EA398C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CieloServices", "CieloServices\CieloServices.csproj", "{67A9B055-AC38-424B-8A54-8EFB5EA398C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{8A948E4A-4995-46DE-87E6-45E303AF2270}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{8A948E4A-4995-46DE-87E6-45E303AF2270}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Lib\Library.csproj", "{CC166A2C-AB67-44FA-B7CF-19FFE400B023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Lib\Library.csproj", "{CC166A2C-AB67-44FA-B7CF-19FFE400B023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{526F347A-22AD-423E-94F6-C21B16348A22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{526F347A-22AD-423E-94F6-C21B16348A22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16BAE8D9-ADC8-4474-AC7A-699857633F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16BAE8D9-ADC8-4474-AC7A-699857633F7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2BB0951C-718F-4170-BDB4-40D950DEE153}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{081229E2-4A52-4FE8-8592-1A92A4FB6DBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87AB078F-7DA4-4C55-ABCC-8F3B7C9960A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,21 @@ Global
 		{16BAE8D9-ADC8-4474-AC7A-699857633F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16BAE8D9-ADC8-4474-AC7A-699857633F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16BAE8D9-ADC8-4474-AC7A-699857633F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB0951C-718F-4170-BDB4-40D950DEE153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB0951C-718F-4170-BDB4-40D950DEE153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB0951C-718F-4170-BDB4-40D950DEE153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB0951C-718F-4170-BDB4-40D950DEE153}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67A9B055-AC38-424B-8A54-8EFB5EA398C1} = {081229E2-4A52-4FE8-8592-1A92A4FB6DBF}
+		{8A948E4A-4995-46DE-87E6-45E303AF2270} = {081229E2-4A52-4FE8-8592-1A92A4FB6DBF}
+		{CC166A2C-AB67-44FA-B7CF-19FFE400B023} = {081229E2-4A52-4FE8-8592-1A92A4FB6DBF}
+		{526F347A-22AD-423E-94F6-C21B16348A22} = {081229E2-4A52-4FE8-8592-1A92A4FB6DBF}
+		{16BAE8D9-ADC8-4474-AC7A-699857633F7D} = {081229E2-4A52-4FE8-8592-1A92A4FB6DBF}
+		{2BB0951C-718F-4170-BDB4-40D950DEE153} = {87AB078F-7DA4-4C55-ABCC-8F3B7C9960A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C36DBAD-09C0-424F-B9DE-3F4FB1DE3467}
