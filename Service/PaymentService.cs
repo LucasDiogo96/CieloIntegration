@@ -22,6 +22,7 @@ namespace Services
             _transactionService = new TransactionService(cieloConfiguration);
         }
 
+        #region Payment Methods Transaction
         public TransactionResponseDetail CreateTransactionCreditCard(Transaction<CreditCard> transaction)
         {
             TransactionResponseDetail TResponse = new TransactionResponseDetail();
@@ -101,7 +102,6 @@ namespace Services
 
             return TResponse;
         }
-
         public TransactionResponseDetail CreateTransactionBankslip(Transaction<Bankslip> transaction)
         {
 
@@ -113,7 +113,9 @@ namespace Services
 
                 var payment = LoadBankslip(transaction);
 
+
                 var request = new BankslipRequest(transaction.OrderNumber, customer, payment);
+
 
                 var response = _cieloService.CreateBankslipTransaction(request);
 
@@ -167,7 +169,9 @@ namespace Services
 
             return TResponse;
         }
+        #endregion
 
+        #region Create Payload
         private CreditCardPaymentRequest LoadCredit(Transaction<CreditCard> transaction)
         {
             CreditCardPaymentRequest payment = new CreditCardPaymentRequest()
@@ -209,14 +213,12 @@ namespace Services
                 Assignor = _cieloConfiguration.Assignor,
                 Provider = _cieloConfiguration.Provider,
                 Address = _cieloConfiguration.Address,
-
                 Amount = transaction.Amount,
-                Type = transaction.PaymentType.ToString(),
+                Type = PaymentType.Boleto.ToDescription(),
                 Instructions = transaction.PaymentObject.Instructions,
                 BoletoNumber = transaction.PaymentObject.BoletoNumber,
                 Demonstrative = transaction.PaymentObject.Demonstrative,
                 ExpirationDate = transaction.PaymentObject.ExpirationDate,
-
             };
 
 
@@ -227,6 +229,7 @@ namespace Services
 
             return payment;
         }
+        #endregion
 
     }
 }
