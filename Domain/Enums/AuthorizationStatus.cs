@@ -1,4 +1,6 @@
-﻿namespace Domain.Enums
+﻿using Lib.Attributes;
+
+namespace Domain.Enums
 {
     public enum AuthorizationStatus
     {

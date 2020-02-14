@@ -4,7 +4,7 @@ namespace Domain.Services.Interfaces
 {
     public interface IPaymentService
     {
-        TransactionResponse CreateTransactionCreditCard(Transaction<CreditCard> transaction);
-        TransactionResponse CreateTransactionBankslip(Transaction<Bankslip> transaction);
+        TransactionResponseDetail CreateTransactionCreditCard(Transaction<CreditCard> transaction);
+        TransactionResponseDetail CreateTransactionBankslip(Transaction<Bankslip> transaction);
     }
 }

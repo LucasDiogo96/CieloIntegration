@@ -5,7 +5,7 @@ namespace Domain.Services.Interfaces
 {
     public interface ITransactionService
     {
-        public TransactionResponse Cancel(Guid PaymentId);
-        public TransactionResponse Get(Guid PaymentId, bool Callback);
+        public TransactionResponseDetail Cancel(Guid PaymentId);
+        public TransactionResponseDetail Get(Guid PaymentId, bool Callback);
     }
 }
