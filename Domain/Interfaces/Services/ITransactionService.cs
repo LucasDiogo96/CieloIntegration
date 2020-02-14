@@ -1,9 +1,7 @@
-﻿using Solar.Domain.Entities.Transaction;
+﻿using Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Solar.Domain.Interfaces.Services
+namespace Domain.Services.Interfaces
 {
     public interface ITransactionService
     {

@@ -1,8 +1,6 @@
-﻿using Solar.Domain.Entities;
-using Solar.Domain.Entities.Cielo;
-using Solar.Domain.Entities.Transaction;
+﻿using Domain.Entities;
 
-namespace Solar.Domain.Interfaces.Services
+namespace Domain.Services.Interfaces
 {
     public interface IPaymentService
     {

@@ -1,7 +1,6 @@
-﻿using Solar.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Solar.Domain.Interfaces.Services
+namespace Domain.Services.Interfaces
 {
     public interface IService<T> where T : BaseEntity
     {
@@ -10,6 +9,7 @@ namespace Solar.Domain.Interfaces.Services
         T Put(T obj);
 
         void Delete(int id);
+
 
         T Get(int id);
 

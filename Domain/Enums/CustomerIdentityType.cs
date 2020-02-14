@@ -1,4 +1,6 @@
-﻿namespace Solar.Domain.Enums
+﻿using System.ComponentModel;
+
+namespace Solar.Domain.Enums
 {
     public enum CustomerIdentityType
     {

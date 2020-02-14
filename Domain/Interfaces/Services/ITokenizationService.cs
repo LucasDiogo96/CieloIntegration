@@ -1,12 +1,9 @@
-﻿using Solar.Domain.Entities.Cielo;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Domain.Entities;
 
-namespace Solar.Domain.Interfaces.Services
+namespace Domain.Services.Interfaces
 {
-   public interface ITokenizationService
+    public interface ITokenizationService
     {
-        Tokenization Create(CreditCard creditCard);
+        TokenizationResponse Create(CreditCard creditCard);
     }
 }
