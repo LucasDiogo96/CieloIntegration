@@ -75,6 +75,9 @@ namespace Service
                             case PaymentType.Boleto:
                                 TResponse.Detail = JsonConvert.DeserializeObject<BankslipPaymentRequest>(response.Payment.ToString());
                                 break;
+                            case PaymentType.Qrcode:
+                                TResponse.Detail = JsonConvert.DeserializeObject<QrCodePaymentResponse>(response.Payment.ToString());
+                                break;
                             default:
                                 throw new InvalidCastException("Não foi possível identificar o tipo do pagamento.");
                         }

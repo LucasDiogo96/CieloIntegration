@@ -60,6 +60,18 @@ namespace Services
             return Execute<BankslipResponse>(param);
         }
 
+        public QrCodeResponse CreateQrCodeTransaction(QrCodeRequest request)
+        {
+            CieloRequest param = new CieloRequest()
+            {
+                baseUrl = _cieloConfiguration.DefaultEndpoint,
+                method = Method.POST,
+                resource = resourceUrl,
+                body = request
+            };
+            return Execute<QrCodeResponse>(param);
+        }
+
         public CieloResponse CancelTransaction(Guid? paymentId = null, string merchantOrderId = null, decimal amount = 0)
         {
             if (paymentId == null && String.IsNullOrWhiteSpace(merchantOrderId))

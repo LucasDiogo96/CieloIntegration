@@ -6,5 +6,6 @@ namespace Domain.Services.Interfaces
     {
         TransactionResponseDetail CreateTransactionCreditCard(Transaction<CreditCard> transaction);
         TransactionResponseDetail CreateTransactionBankslip(Transaction<Bankslip> transaction);
+        TransactionResponseDetail CreateTransactionQRCode(Transaction<QrCode> transaction);
     }
 }

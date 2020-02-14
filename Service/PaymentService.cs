@@ -169,9 +169,88 @@ namespace Services
 
             return TResponse;
         }
+        public TransactionResponseDetail CreateTransactionQRCode(Transaction<QrCode> transaction)
+        {
+
+            TransactionResponseDetail TResponse = new TransactionResponseDetail();
+
+            try
+            {
+                Customer customer = transaction.Customer;
+
+                var payment = LoadQrCode(transaction);
+
+
+                var request = new QrCodeRequest(transaction.OrderNumber, customer, payment);
+
+
+                var response = _cieloService.CreateQrCodeTransaction(request);
+
+                //set payment captured status
+                transaction.TransactionStatus = (Status)response.Payment.Status;
+
+                switch (transaction.TransactionStatus)
+                {
+                    case Status.Authorized:
+
+                        //transaction.PaymentObject.BarCodeNumber = response.Payment.BarCodeNumber;
+                        //transaction.PaymentObject.BoletoNumber = response.Payment.DigitableLine;
+                        //transaction.PaymentObject.DigitableLine = response.Payment.BarCodeNumber;
+                        //transaction.PaymentObject.Url = response.Payment.Url;
+                        transaction.CreatedDate = DateTime.Now.ToCieloShortFormatDate();
+                        transaction.IdTransaction = new Guid(response.Payment.PaymentId);
+
+
+                        TResponse.Detail = transaction;
+                        TResponse.HasError = false;
+
+                        break;
+                    case Status.NotFinished:
+                    case Status.Refunded:
+                    case Status.Voided:
+                    case Status.Aborted:
+                    case Status.Denied:
+
+                        TResponse.Detail = new
+                        {
+                            Status = transaction.TransactionStatus,
+                            Description = EnumExtensions.Description(transaction.TransactionStatus),
+                            Error = "Ocorreu um erro ao processar o boleto bancário."
+                        };
+                        TResponse.HasError = true;
+
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                TResponse.Detail = new
+                {
+                    Status = transaction.TransactionStatus,
+                    Description = "Ocorreu um erro ao processar a transação.",
+                    Error = e.Message
+                };
+                TResponse.HasError = true;
+
+            }
+
+            return TResponse;
+        }
         #endregion
 
         #region Create Payload
+        private QrCodePaymentRequest LoadQrCode(Transaction<QrCode> transaction)
+        {
+            QrCodePaymentRequest payment = new QrCodePaymentRequest()
+            {
+                Amount = (int)transaction.Amount,
+                Capture = transaction.PaymentObject.Capture,
+                Installments = transaction.PaymentObject.Installments,
+                Type = PaymentType.Qrcode.ToString()
+            };
+
+            return payment;
+        }
         private CreditCardPaymentRequest LoadCredit(Transaction<CreditCard> transaction)
         {
             CreditCardPaymentRequest payment = new CreditCardPaymentRequest()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities.Cielo.Response.QrCode
+namespace Domain.Entities
 {
     public class QrCodeResponse : PaymentMethodResponse
     {
