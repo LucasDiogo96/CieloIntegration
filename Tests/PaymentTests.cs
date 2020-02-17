@@ -17,8 +17,6 @@ namespace Tests
         protected internal Configuration _cieloConfiguration;
         IOptions<Configuration> options = null;
 
-        private readonly IConfiguration _configuration;
-
         public static IConfiguration InitConfiguration()
         {
             var config = new ConfigurationBuilder()
