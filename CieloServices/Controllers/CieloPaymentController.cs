@@ -1,76 +1,46 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Service;
+using Services;
 using System;
 
 namespace CieloServices.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionController : ControllerBase
+    public class CieloPaymentController : ControllerBase
     {
         protected internal Configuration _cieloConfiguration;
-        private ITransactionService _service;
+        private IPaymentService _paymentservice;
 
-
-        public TransactionController(IOptions<Configuration> cieloConfiguration)
+        public CieloPaymentController(IOptions<Configuration> cieloConfiguration)
         {
             _cieloConfiguration = cieloConfiguration.Value;
-            _service = new TransactionService(_cieloConfiguration);
+            _paymentservice = new PaymentService(_cieloConfiguration);
         }
 
         //[Authorize]
-        [HttpGet]
-        [Route("Get")]
-        public IActionResult Get([FromQuery]Guid Idtransaction)
+        [HttpPost]
+        [Route("Create/Bankslip")]
+        public IActionResult Create([FromBody]Transaction<Bankslip> transaction)
         {
             try
             {
-                TransactionResponseDetail response = _service.Get(Idtransaction,false);
+
+                TransactionResponseDetail result = _paymentservice.CreateTransactionBankslip(transaction);
 
                 return Ok(new ResponseModel<TransactionResponseDetail>
                 {
-                    response = new ResponseDataModel<TransactionResponseDetail>
-                    {
-                        data = response,
-                        success = true,
-                        message = "Dados buscados com sucesso!"
+                    response = new ResponseDataModel<TransactionResponseDetail> 
+                    { 
+                        data = result,
+                        success = !result.HasError,
+                        message = result.HasError ? "Não foi possível efetuar a cobrança!" : "Boleto gerado com sucesso!"
                     }
                 });
-            }
-            catch (Exception ex)
-            {
-      
 
-                return BadRequest(new ResponseModel<TransactionResponseDetail>
-                {
-                    response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = ex.Message }
-                });
-            }
-        }
-
-        [Authorize]
-        [HttpDelete]
-        [Route("Cancel")]
-        public IActionResult Cancel([FromQuery]Guid Idtransaction)
-        {
-            try
-            {
-                TransactionResponseDetail response = _service.Cancel(Idtransaction);
-
-                return Ok(new ResponseModel<TransactionResponseDetail>
-                {
-                    response = new ResponseDataModel<TransactionResponseDetail>
-                    {
-                        data = response,
-                        success = true,
-                        message = "Transação cancelada com sucesso!"
-                    }
-                });
             }
             catch (Exception ex)
             {
@@ -80,5 +50,38 @@ namespace CieloServices.API.Controllers
                 });
             }
         }
+
+
+        //[Authorize]
+        [HttpPost]
+        [Route("Create/CreditCard")]
+        public IActionResult Create([FromBody]Transaction<CreditCard> transaction)
+        {
+            try
+            {
+
+                TransactionResponseDetail result = _paymentservice.CreateTransactionCreditCard(transaction);
+
+                return Ok(new ResponseModel<TransactionResponseDetail>
+                {
+                    response = new ResponseDataModel<TransactionResponseDetail>
+                    {
+                        data = result,
+                        success = !result.HasError,
+                        message = result.HasError ? "Não foi possível efetuar a cobrança!" : "Cobrança gerada com sucesso!"
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel<TransactionResponseDetail>
+                {
+                    response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = ex.Message }
+                });
+            }
+        }
+
+
+
     }
 }

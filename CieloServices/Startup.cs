@@ -42,7 +42,7 @@ namespace CieloServices
             services.Configure<AppSettingsModel>(appSettingsSection);
 
             //Set Cielo Configuration
-            services.Configure<Configuration>(Configuration.GetSection("Cielo"));
+            services.Configure<Configuration>(Configuration.GetSection("CieloCielo"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

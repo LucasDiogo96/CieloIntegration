@@ -2,7 +2,7 @@
 {
     public class ResponseModel<T>
     {
-        public ResponseDataModel<T> resposta { get; set; }
+        public ResponseDataModel<T> response { get; set; }
     }
 
     public class ResponseModel

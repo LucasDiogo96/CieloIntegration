@@ -68,7 +68,7 @@ namespace CieloServices.Middlewares
 
             string retorno = JsonConvert.SerializeObject(new ResponseModel<TransactionResponseDetail>
             {
-                resposta = new ResponseDataModel<TransactionResponseDetail> { success = false, message = "Acesso não autorizado!" }
+                response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = "Acesso não autorizado!" }
             });
 
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;

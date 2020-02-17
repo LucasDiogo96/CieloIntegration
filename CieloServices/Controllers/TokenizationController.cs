@@ -34,7 +34,7 @@ namespace CieloServices.API.Controllers
 
                 return Ok(new ResponseModel<TokenizationResponse>
                 {
-                    resposta = new ResponseDataModel<TokenizationResponse>
+                    response = new ResponseDataModel<TokenizationResponse>
                     {
                         data = response,
                         success = true,
@@ -46,7 +46,7 @@ namespace CieloServices.API.Controllers
             {
                 return BadRequest(new ResponseModel<TokenizationResponse>
                 {
-                    resposta = new ResponseDataModel<TokenizationResponse> { success = false, message = ex.Message }
+                    response = new ResponseDataModel<TokenizationResponse> { success = false, message = ex.Message }
                 });
             }
         }

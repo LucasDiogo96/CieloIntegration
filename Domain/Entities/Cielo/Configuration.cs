@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Domain.Entities
 {
     public class Configuration
     {
