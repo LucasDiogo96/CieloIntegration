@@ -122,38 +122,7 @@ namespace Services
                 client.BaseUrl = new Uri(requestParam.baseUrl);
                 var request = new RestRequest(requestParam.resource.CleanPathUrl(requestParam.baseUrl), requestParam.method);
 
-                #region parameters
-
-                if (requestParam.param != null)
-                {
-                    foreach (Parameter p in requestParam.param)
-                    {
-                        request.AddParameter(p);
-                    }
-                }
-                #endregion adding parameters
-
-                #region authentication methods
-
-                request.AddParameter("MerchantId", _cieloConfiguration.MerchantId, ParameterType.HttpHeader);
-                request.AddParameter("MerchantKey", _cieloConfiguration.MerchantKey, ParameterType.HttpHeader);
-                request.AddParameter("RequestId", Guid.NewGuid(), ParameterType.HttpHeader);
-
-                #endregion authentication
-
-                #region header request params
-
-                request.AddHeader("Accept", "application/json");
-                request.AddHeader("Content-Type", "application/json");
-                request.RequestFormat = DataFormat.Json;
-
-                #endregion
-
-                if (requestParam.body != null)
-
-                    request.AddParameter("application/json",
-                           JsonConvert.SerializeObject(requestParam.body, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                           ParameterType.RequestBody);
+                ConfigureExecute(requestParam, ref request);
 
                 var response = client.Execute(request);
 
@@ -175,6 +144,41 @@ namespace Services
             }
         }
 
+        private void ConfigureExecute(CieloRequest requestParam, ref RestRequest request)
+        {
+            #region parameters
+
+            if (requestParam.param != null)
+            {
+                foreach (Parameter p in requestParam.param)
+                {
+                    request.AddParameter(p);
+                }
+            }
+            #endregion adding parameters
+
+            #region authentication methods
+
+            request.AddParameter("MerchantId", _cieloConfiguration.MerchantId, ParameterType.HttpHeader);
+            request.AddParameter("MerchantKey", _cieloConfiguration.MerchantKey, ParameterType.HttpHeader);
+            request.AddParameter("RequestId", Guid.NewGuid(), ParameterType.HttpHeader);
+
+            #endregion authentication
+
+            #region header request params
+
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Content-Type", "application/json");
+            request.RequestFormat = DataFormat.Json;
+
+            #endregion
+
+            if (requestParam.body != null)
+
+                request.AddParameter("application/json",
+                       JsonConvert.SerializeObject(requestParam.body, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                       ParameterType.RequestBody);
+        }
         #endregion
     }
 }
