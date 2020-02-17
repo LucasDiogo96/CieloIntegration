@@ -38,7 +38,7 @@ namespace CieloServices.API.Controllers
                     {
                         data = response,
                         success = true,
-                        message = "Tokenization gerado com sucesso!"
+                        message = "Cartão tokenizado com sucesso!"
                     }
                 });
             }
