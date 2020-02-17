@@ -79,7 +79,7 @@ namespace Tests
 
             var responseObject = (Transaction<CreditCard>)responseController.response.data.Detail;
 
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Equals(responseObject.TransactionStatus, Status.Authorized);
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(responseObject.TransactionStatus, Status.Authorized);
 
         }
 
