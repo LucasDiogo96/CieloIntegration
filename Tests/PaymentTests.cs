@@ -46,7 +46,7 @@ namespace Tests
                 PaymentObject = new CreditCard()
                 {
                     Holder = "Teste Holder",
-                    CardNumber = "4551870000000183",
+                    CardNumber = "402400715376319",
                     ExpirationDate = "12/2021",
                     SecurityCode = "123",
                     Installments = 2

@@ -10,7 +10,7 @@ namespace Library.Util
         {
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore,
-            Formatting = Formatting.None,
+            Formatting = Formatting.Indented,
             DefaultValueHandling = DefaultValueHandling.Ignore
         };
 

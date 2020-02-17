@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Services.Interfaces;
 using Lib.Exceptions;
 using Lib.Extensions;
+using Library.Util;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -175,9 +176,7 @@ namespace Services
 
             if (requestParam.body != null)
 
-                request.AddParameter("application/json",
-                       JsonConvert.SerializeObject(requestParam.body, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                       ParameterType.RequestBody);
+              request.AddParameter("application/json", Serializer.Serialize(requestParam.body), ParameterType.RequestBody);
         }
         #endregion
     }
