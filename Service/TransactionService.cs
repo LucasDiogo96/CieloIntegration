@@ -70,13 +70,14 @@ namespace Service
                         switch (type)
                         {
                             case PaymentType.CreditCard:
+                            case PaymentType.DebitCard:
                                 TResponse.Detail = JsonConvert.DeserializeObject<CreditCardPaymentRequest>(response.Payment.ToString());
                                 break;
                             case PaymentType.Boleto:
                                 TResponse.Detail = JsonConvert.DeserializeObject<BankslipPaymentRequest>(response.Payment.ToString());
                                 break;
-                            case PaymentType.Qrcode:
-                                TResponse.Detail = JsonConvert.DeserializeObject<QrCodePaymentResponse>(response.Payment.ToString());
+                           case PaymentType.Qrcode:
+                                TResponse.Detail = JsonConvert.DeserializeObject<QrCodePaymentResponse>(response.Payment.ToString()); 
                                 break;
                             default:
                                 throw new InvalidCastException("Não foi possível identificar o tipo do pagamento.");
