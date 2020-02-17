@@ -81,7 +81,33 @@ namespace CieloServices.API.Controllers
             }
         }
 
+        //[Authorize]
+        [HttpPost]
+        [Route("Create/DebitCard")]
+        public IActionResult Create([FromBody]Transaction<DebitCard> transaction)
+        {
+            try
+            {
 
+                TransactionResponseDetail result = _paymentservice.CreateTransactionDebitCard(transaction);
 
+                return Ok(new ResponseModel<TransactionResponseDetail>
+                {
+                    response = new ResponseDataModel<TransactionResponseDetail>
+                    {
+                        data = result,
+                        success = !result.HasError,
+                        message = result.HasError ? "Não foi possível efetuar a cobrança!" : "Cobrança gerada com sucesso!"
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel<TransactionResponseDetail>
+                {
+                    response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = ex.Message }
+                });
+            }
+        }
     }
 }

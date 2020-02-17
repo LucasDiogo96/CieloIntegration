@@ -10,6 +10,7 @@ namespace Domain.Entities
         public bool Capture { get; set; }
         public bool Authenticate { get; set; }
         public CreditCard CreditCard { get; set; }
+        public DebitCard DebitCard { get; set; }
         public bool IsCryptoCurrencyNegotiation { get; set; }
         public bool tryautomaticcancellation { get; set; }
         public string ProofOfSale { get; set; }
@@ -17,6 +18,7 @@ namespace Domain.Entities
         public string AuthorizationCode { get; set; }
         public string SoftDescriptor { get; set; }
         public string PaymentId { get; set; }
+        public string AuthenticationUrl { get; set; }
         public string Type { get; set; }
         public int Amount { get; set; }
         public int CapturedAmount { get; set; }

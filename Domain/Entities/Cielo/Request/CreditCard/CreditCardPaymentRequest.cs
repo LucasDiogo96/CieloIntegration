@@ -58,5 +58,6 @@ namespace Domain.Entities
 
         public string ReturnUrl { get; set; }
         public CreditCard CreditCard { get; set; }
+        public DebitCard DebitCard { get; set; }
     }
 }

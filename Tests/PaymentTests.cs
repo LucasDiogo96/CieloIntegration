@@ -47,7 +47,7 @@ namespace Tests
                 {
                     Holder = "Teste Holder",
                     CardNumber = "4551870000000183",
-                    ExpirationDate = "12/2030",
+                    ExpirationDate = "12/2021",
                     SecurityCode = "123",
                     Installments = 2
                 },
@@ -81,6 +81,53 @@ namespace Tests
 
             Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Equals(responseObject.TransactionStatus, Status.Authorized);
 
+        }
+
+        [TestMethod]
+        public void CreateDebitCardTransaction()
+        {
+            //Create Request object
+
+            var transaction = new Transaction<DebitCard>()
+            {
+                OrderNumber = "2014111703",
+                Amount = 17.50m,
+                PaymentObject = new DebitCard()
+                {
+                    Holder = "Teste Holder",
+                    CardNumber = "402400715376319",
+                    ExpirationDate = "12/2030",
+                    SecurityCode = "123"
+                },
+                Customer = new Customer()
+                {
+                    Name = "Lucas Diogo da Silva",
+                    Identity = "50835252086",
+                    Birthdate = "1991-01-02",
+                    Email = "compradorteste@teste.com",
+                    Address = new Address()
+                    {
+                        Street = "Rua Teste",
+                        Number = "123",
+                        Complement = "AP 123",
+                        ZipCode = "12345987",
+                        District = "Santa Isabel",
+                        City = "Rio de Janeiro",
+                        State = "RJ",
+                        Country = "BRA"
+                    }
+                }
+            };
+
+            IActionResult result = new CieloPaymentController(options).Create(transaction);
+
+
+            var okResult = result as OkObjectResult;
+            var responseController = okResult.Value as ResponseModel<TransactionResponseDetail>;
+
+            var responseObject = (Transaction<DebitCard>)responseController.response.data.Detail;
+
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(responseObject.TransactionStatus, Status.PaymentConfirmed);
         }
 
 

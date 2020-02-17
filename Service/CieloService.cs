@@ -14,7 +14,6 @@ namespace Services
 {
     public class CieloService : ICieloService
     {
-        #region private vars
 
         private string resourceUrl = "1/sales/";
 
@@ -32,7 +31,6 @@ namespace Services
 
         private RestClient client = new RestClient();
 
-        #endregion
 
         #region methods
 
