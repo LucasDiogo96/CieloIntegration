@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Lib.Util;
 using System;
 
 namespace Domain.Entities
@@ -6,41 +7,67 @@ namespace Domain.Entities
     public class CreditCardPaymentRequest
     {
         readonly CreditCard _creditCard;
+        readonly DebitCard _debitcard;
 
-        public CreditCardPaymentRequest(PaymentType type,
-                       decimal amount,
-                       EletronicTransferProvider provider,
-                       string returnUrl)
+
+        public CreditCardPaymentRequest(Transaction<DebitCard> transaction, Configuration _cieloConfiguration)
         {
-            Type = type.ToString();
-            Amount = (int)(amount * 100);
-            Provider = provider.ToString();
-            ReturnUrl = returnUrl;
+
+            if (transaction.PaymentObject == null)
+                throw new ArgumentNullException(paramName: nameof(transaction.PaymentObject), message: "O cartão de débito deve ser informado.");
+
+            Amount = (int)(transaction.Amount * 100);
+            Currency = Domain.Enums.Currency.BRL.ToString();
+            Country = "BRA";
+            Type = PaymentType.DebitCard.ToString();
+            Authenticate = true;
+            SoftDescriptor = _cieloConfiguration.SoftDescriptor;
+            ReturnUrl = "http://www.cielo.com.br";
+            DebitCard = (
+              new DebitCard()
+              {
+                  CardNumber = transaction.PaymentObject.CardNumber,
+                  Holder = transaction.PaymentObject.Holder,
+                  SecurityCode = transaction.PaymentObject.SecurityCode,
+                  Brand = CreditCardUtil.GetBrand(transaction.PaymentObject.CardNumber),
+                  ExpirationDate = transaction.PaymentObject.ExpirationDate
+              }
+              );
         }
 
-        public CreditCardPaymentRequest(PaymentType type,
-                       decimal amount,
-                       int installments,
-                       string softDescriptor,
-                       bool capture = false,
-                       bool authenticate = false,
-                       string returnUrl = null,
-                       CreditCard creditCard = null,
-                       DebitCard debitCard = null)
+        public CreditCardPaymentRequest(Transaction<CreditCard> transaction, Configuration _cieloConfiguration)
         {
-            Type = type.ToString();
-            Amount = (int)(amount * 100);
-            Installments = installments;
-            SoftDescriptor = softDescriptor;
-            Capture = capture;
-            Authenticate = Authenticate;
-            ReturnUrl = returnUrl;
 
-            if (type == PaymentType.CreditCard)
-                if (creditCard == null)
-                    throw new ArgumentNullException(paramName: nameof(creditCard), message: "O cartão de crédito deve ser informado.");
-                else
-                    _creditCard = creditCard;
+            if (transaction.PaymentObject == null)
+                throw new ArgumentNullException(paramName: nameof(transaction.PaymentObject), message: "O cartão de crédito deve ser informado.");
+
+            Amount = (int)(transaction.Amount * 100);
+            Currency = Domain.Enums.Currency.BRL.ToString();
+            Authenticate = false;
+            Country = "BRA";
+            Type = PaymentType.CreditCard.ToString();
+            Installments = transaction.PaymentObject.Installments;
+            SoftDescriptor = _cieloConfiguration.SoftDescriptor;
+            CreditCard = (
+              !string.IsNullOrWhiteSpace(transaction.PaymentObject.CardToken) ?
+              new CreditCard
+              {
+                  CardToken = transaction.PaymentObject.CardToken,
+                  SecurityCode = transaction.PaymentObject.SecurityCode,
+                  Installments = transaction.PaymentObject.Installments,
+              } :
+               new CreditCard
+               {
+                   CardNumber = transaction.PaymentObject.CardNumber,
+                   Holder = transaction.PaymentObject.Holder,
+                   Name = transaction.PaymentObject.Holder,
+                   SecurityCode = transaction.PaymentObject.SecurityCode,
+                   Installments = transaction.PaymentObject.Installments,
+                   Brand = CreditCardUtil.GetBrand(transaction.PaymentObject.CardNumber),
+                   ExpirationDate = transaction.PaymentObject.ExpirationDate,
+                   SaveCard = transaction.PaymentObject.SaveCard
+               }
+              );
         }
 
         public CreditCardPaymentRequest() { }

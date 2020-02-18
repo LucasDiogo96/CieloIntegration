@@ -30,9 +30,9 @@ namespace Lib.Util
             }
         }
 
-        public static bool IdentityIsValid(string cpfCnpj)
+        public static bool IdentityIsValid(string Identity)
         {
-            return (IsCpf(cpfCnpj) || IsCnpj(cpfCnpj));
+            return (IsCpf(Identity) || IsCnpj(Identity));
         }
 
         private static bool IsCpf(string cpf)
@@ -113,6 +113,11 @@ namespace Lib.Util
             digito = digito + resto.ToString();
 
             return cnpj.EndsWith(digito);
+        }
+
+        public static string GetIdentityType(string Identity)
+        {
+            return (IsCpf(Identity) ? "CPF" : IsCnpj(Identity) ? "CNPJ" : null);
         }
     }
 }

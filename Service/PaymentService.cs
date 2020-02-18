@@ -27,7 +27,7 @@ namespace Services
         {
             TransactionResponseDetail TResponse = new TransactionResponseDetail();
 
-            var payment = LoadCredit(transaction);
+            var payment = new CreditCardPaymentRequest(transaction, _cieloConfiguration);
 
             var request = new CreditCardRequest(transaction.OrderNumber, transaction.Customer, payment);
 
@@ -106,11 +106,10 @@ namespace Services
         {
             TransactionResponseDetail TResponse = new TransactionResponseDetail();
 
-            var payment = LoadDebit(transaction);
+            var payment = new CreditCardPaymentRequest(transaction, _cieloConfiguration);
 
             var request = new CreditCardRequest(transaction.OrderNumber, transaction.Customer, payment);
 
-            //Captura e reserva o saldo do cartão de crédito
             var capture = _cieloService.CreateCreditTransaction(request);
 
 
@@ -122,37 +121,24 @@ namespace Services
                 switch (transaction.TransactionStatus)
                 {
                     case Status.Authorized:
-
-                        transaction.PaymentObject.CardNumber = capture.Payment.CreditCard.CardNumber;
-                        transaction.PaymentObject.Brand = payment.CreditCard.Brand;
-                        transaction.PaymentObject.SecurityCode = null;
-                        transaction.PaymentObject.ExpirationDate = null;
-
-                        //Realiza a transação
-                        CieloResponse response = _cieloService.CaptureTransaction(new Guid(capture.Payment.PaymentId));
-                        transaction.TransactionStatus = response.Status;
-                        transaction.IdTransaction = new Guid(capture.Payment.PaymentId);
-                        transaction.CreatedDate = DateTime.Now.ToCieloShortFormatDate();
-
-                        TResponse.Detail = transaction;
-                        TResponse.HasError = false;
-
-                        break;
                     case Status.PaymentConfirmed:
+                    case Status.NotFinished:
+
 
                         transaction.PaymentObject.CardNumber = capture.Payment.DebitCard.CardNumber;
                         transaction.PaymentObject.Brand = payment.DebitCard.Brand;
                         transaction.PaymentObject.SecurityCode = null;
                         transaction.PaymentObject.ExpirationDate = null;
+
+                        transaction.PaymentType = PaymentType.DebitCard;
                         transaction.IdTransaction = new Guid(capture.Payment.PaymentId);
                         transaction.CreatedDate = DateTime.Now.ToCieloShortFormatDate();
+                        transaction.PaymentObject.AuthenticationUrl = capture.Payment.AuthenticationUrl;
 
                         TResponse.Detail = transaction;
                         TResponse.HasError = false;
 
                         break;
-
-                    case Status.NotFinished:
                     case Status.Refunded:
                     case Status.Voided:
                     case Status.Aborted:
@@ -174,7 +160,6 @@ namespace Services
             }
             catch (Exception e)
             {
-
                 if (capture != null && capture.Payment != null)
                 {
                     //if has error try cancel
@@ -202,11 +187,9 @@ namespace Services
             {
                 Customer customer = transaction.Customer;
 
-                var payment = LoadBankslip(transaction);
-
+                var payment = new BankslipPaymentRequest(ref transaction, _cieloConfiguration);
 
                 var request = new BankslipRequest(transaction.OrderNumber, customer, payment);
-
 
                 var response = _cieloService.CreateBankslipTransaction(request);
 
@@ -262,88 +245,5 @@ namespace Services
         }
 
         #endregion
-
-        #region Create Payload
-        private CreditCardPaymentRequest LoadCredit(Transaction<CreditCard> transaction)
-        {
-            CreditCardPaymentRequest payment = new CreditCardPaymentRequest()
-            {
-                Amount = transaction.Amount,
-                Currency = Currency.BRL.ToString(),
-                Country = "BRA",
-                Type = PaymentType.CreditCard.ToString(),
-                Installments = transaction.PaymentObject.Installments,
-                SoftDescriptor = _cieloConfiguration.SoftDescriptor,
-                CreditCard = (
-                  !string.IsNullOrWhiteSpace(transaction.PaymentObject.CardToken) ?
-                  new CreditCard
-                  {
-                      CardToken = transaction.PaymentObject.CardToken,
-                      SecurityCode = transaction.PaymentObject.SecurityCode,
-                      Installments = transaction.PaymentObject.Installments,
-                  } :
-                   new CreditCard
-                   {
-                       CardNumber = transaction.PaymentObject.CardNumber,
-                       Holder = transaction.PaymentObject.Holder,
-                       Name = transaction.PaymentObject.Holder,
-                       SecurityCode = transaction.PaymentObject.SecurityCode,
-                       Installments = transaction.PaymentObject.Installments,
-                       Brand = CreditCardUtil.GetBrand(transaction.PaymentObject.CardNumber),
-                       ExpirationDate = transaction.PaymentObject.ExpirationDate,
-                       SaveCard = transaction.PaymentObject.SaveCard
-                   }
-                  )
-            };
-            return payment;
-        }
-        private CreditCardPaymentRequest LoadDebit(Transaction<DebitCard> transaction)
-        {
-            CreditCardPaymentRequest payment = new CreditCardPaymentRequest()
-            {
-                Amount = transaction.Amount,
-                Currency = Currency.BRL.ToString(),
-                Country = "BRA",
-                Type = PaymentType.DebitCard.ToString(),
-                SoftDescriptor = _cieloConfiguration.SoftDescriptor,
-                DebitCard = (
-                  new DebitCard()
-                  {
-                      CardNumber = transaction.PaymentObject.CardNumber,
-                      Holder = transaction.PaymentObject.Holder,
-                      SecurityCode = transaction.PaymentObject.SecurityCode,
-                      Brand = CreditCardUtil.GetBrand(transaction.PaymentObject.CardNumber),
-                      ExpirationDate = transaction.PaymentObject.ExpirationDate
-                  }
-                  )
-            };
-            return payment;
-        }
-        private BankslipPaymentRequest LoadBankslip(Transaction<Bankslip> transaction)
-        {
-            BankslipPaymentRequest payment = new BankslipPaymentRequest()
-            {
-                Identification = _cieloConfiguration.Identification,
-                Assignor = _cieloConfiguration.Assignor,
-                Provider = _cieloConfiguration.Provider,
-                Address = _cieloConfiguration.Address,
-                Amount = transaction.Amount,
-                Type = PaymentType.Boleto.ToDescription(),
-                Instructions = transaction.PaymentObject.Instructions,
-                BoletoNumber = transaction.PaymentObject.BoletoNumber,
-                Demonstrative = transaction.PaymentObject.Demonstrative,
-                ExpirationDate = transaction.PaymentObject.ExpirationDate,
-            };
-
-
-            transaction.PaymentObject.Identification = payment.Identification;
-            transaction.PaymentObject.Assignor = payment.Assignor;
-            transaction.PaymentObject.Address = payment.Address;
-            transaction.PaymentObject.Provider = payment.Provider;
-
-            return payment;
-        }
-        #endregion
-
     }
 }

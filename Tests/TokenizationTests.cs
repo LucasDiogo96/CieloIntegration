@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+
 
 namespace Tests
 {
@@ -57,7 +56,7 @@ namespace Tests
 
             var responseObject = (TokenizationResponse)responseController.response.data;
 
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(responseObject.CardToken);
+           Assert.IsNotNull(responseObject.CardToken);
 
         }
     }

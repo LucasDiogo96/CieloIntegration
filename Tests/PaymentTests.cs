@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
+
 
 namespace Tests
 {
@@ -46,7 +45,7 @@ namespace Tests
                 PaymentObject = new CreditCard()
                 {
                     Holder = "Teste Holder",
-                    CardNumber = "402400715376319",
+                    CardNumber = "1234123412341231",
                     ExpirationDate = "12/2021",
                     SecurityCode = "123",
                     Installments = 2
@@ -79,7 +78,7 @@ namespace Tests
 
             var responseObject = (Transaction<CreditCard>)responseController.response.data.Detail;
 
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(responseObject.TransactionStatus, Status.Authorized);
+           Assert.AreEqual(responseObject.TransactionStatus, Status.PaymentConfirmed);
 
         }
 
@@ -127,7 +126,8 @@ namespace Tests
 
             var responseObject = (Transaction<DebitCard>)responseController.response.data.Detail;
 
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(responseObject.TransactionStatus, Status.PaymentConfirmed);
+            Assert.AreEqual(responseObject.TransactionStatus, Status.NotFinished);
+            Assert.IsNotNull(responseObject.PaymentObject.AuthenticationUrl);
         }
 
 
@@ -143,7 +143,6 @@ namespace Tests
                 PaymentObject = new Bankslip()
                 {
                     Type = "Boleto",
-                    Provider = "INCLUIR PROVIDER",
                     Address = "Rua Teste",
                     BoletoNumber = "123",
                     Assignor = "Empresa Teste",
@@ -180,7 +179,7 @@ namespace Tests
 
             var responseObject = (Transaction<Bankslip>)responseController.response.data.Detail;
 
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(responseObject.TransactionStatus, Status.Authorized);
+            Assert.AreEqual(responseObject.TransactionStatus, Status.Authorized);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Domain.Entities
         public string ExpirationDate { get; set; }
         public string SecurityCode { get; set; }
         public string Brand { get; set; }
+        public string AuthenticationUrl { get; set; }
     }
 }
