@@ -30,7 +30,7 @@ namespace CieloServices.API.Controllers
         {
             try
             {
-                TransactionResponseDetail response = _service.Get(Idtransaction,false);
+                TransactionResponseDetail response = _service.Get(Idtransaction, false);
 
                 return Ok(new ResponseModel<TransactionResponseDetail>
                 {
@@ -44,7 +44,7 @@ namespace CieloServices.API.Controllers
             }
             catch (Exception ex)
             {
-      
+
 
                 return BadRequest(new ResponseModel<TransactionResponseDetail>
                 {

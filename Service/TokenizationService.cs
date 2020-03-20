@@ -3,7 +3,7 @@ using Domain.Services.Interfaces;
 using RestSharp;
 using Services;
 
-namespace Solar.Services.Services
+namespace Services
 {
     public class TokenizationService : ITokenizationService
     {
