@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CieloServices.Middlewares
+namespace GatewayAPI.Middlewares
 {
     //Builder class
     public static class AuthenticationMiddlewareExtension
@@ -25,7 +24,7 @@ namespace CieloServices.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly string _UserKey = null;
-        private readonly static string KEY = "API-KEY";
+        private readonly static string KEY = "KEY";
 
         public AuthenticationMiddleware(RequestDelegate next , AppSettingsModel configuration)
         {
@@ -66,13 +65,13 @@ namespace CieloServices.Middlewares
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             context.Response.ContentType = "application/json";
 
-            string retorno = JsonConvert.SerializeObject(new ResponseModel<TransactionResponseDetail>
+            string response = JsonConvert.SerializeObject(new ResponseModel<TransactionResponseDetail>
             {
                 response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = "Acesso não autorizado!" }
             });
 
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            await context.Response.WriteAsync(retorno);
+            await context.Response.WriteAsync(response);
         }
 
         private static async Task ValidateKey(HttpContext context, RequestDelegate _next, bool Validate)

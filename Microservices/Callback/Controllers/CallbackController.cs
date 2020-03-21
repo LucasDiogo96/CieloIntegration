@@ -1,12 +1,11 @@
-﻿using Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Service;
 using System;
 
-namespace CieloServices.API.Controllers
+namespace Callback.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -21,7 +20,7 @@ namespace CieloServices.API.Controllers
 
         [HttpPost]
         [Route("Cielo")]
-        public IActionResult CieloCallback([FromBody]Callback callback)
+        public IActionResult CieloCallback([FromBody]Domain.Entities.Callback callback)
         {
             try
             {

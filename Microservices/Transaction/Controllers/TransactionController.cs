@@ -2,6 +2,7 @@
 using Domain.Models;
 using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Service;
@@ -26,6 +27,10 @@ namespace CieloServices.API.Controllers
         //[Authorize]
         [HttpGet]
         [Route("Get")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public IActionResult Get([FromQuery]Guid Idtransaction)
         {
             try

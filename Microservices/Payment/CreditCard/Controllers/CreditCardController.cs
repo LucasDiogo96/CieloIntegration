@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services;
@@ -12,9 +13,9 @@ namespace CreditCard.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CreditCardController : ControllerBase
+    public class CreditCardController : Controller
     {
-        protected internal Configuration _cieloConfiguration;
+        private readonly Configuration _cieloConfiguration;
         private IPaymentService _paymentservice;
 
         public CreditCardController(IOptions<Configuration> cieloConfiguration)
@@ -26,6 +27,8 @@ namespace CreditCard.Controllers
         //[Authorize]
         [HttpPost]
         [Route("Create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create([FromBody] Transaction<Domain.Entities.CreditCard> transaction)
         {
             try

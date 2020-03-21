@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services;
@@ -23,6 +24,8 @@ namespace Boleto.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Create([FromBody]Transaction<Bankslip> transaction)
         {
             try

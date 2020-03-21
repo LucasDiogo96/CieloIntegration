@@ -1,3 +1,6 @@
+using Domain.Entities;
+using Domain.Models;
+using GatewayAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,12 +33,18 @@ namespace GatewayAPI
                 o.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
 
+            //Add Cielo Configuration
+            var CieloConfiguration = new Configuration();
+            Configuration.GetSection("Cielo").Bind(CieloConfiguration);
+            services.Configure<Configuration>(Configuration);
+
             services.AddOcelot(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -45,10 +54,15 @@ namespace GatewayAPI
                 app.UseHsts();
             }
 
+            var config = Configuration.GetSection("AppSettings").Get<AppSettingsModel>();
+            app.UseAuthenticationMiddleware(config);
+
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
             await app.UseOcelot();
+
         }
     }
 }

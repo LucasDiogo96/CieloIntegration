@@ -23,7 +23,7 @@ namespace CieloServices.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IActionResult Create([FromBody]CreditCard creditCard)
+        public IActionResult Create([FromBody]Domain.Entities.CreditCard creditCard)
         {
             try
             {
