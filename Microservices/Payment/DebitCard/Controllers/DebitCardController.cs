@@ -9,7 +9,7 @@ using System;
 namespace DebitCard.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class DebitCardController : ControllerBase
     {
 
@@ -25,7 +25,7 @@ namespace DebitCard.Controllers
 
         //[Authorize]
         [HttpPost]
-        [Route("Create/DebitCard")]
+        [Route("Create")]
         public IActionResult Create([FromBody]Transaction<Domain.Entities.DebitCard> transaction)
         {
             try

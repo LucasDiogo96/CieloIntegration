@@ -9,20 +9,20 @@ using System;
 namespace Boleto.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class BoletoController : ControllerBase
+    [Route("api/[controller]")]
+    public class BankslipController : ControllerBase
     {
         protected internal Configuration _cieloConfiguration;
         private IPaymentService _paymentservice;
 
-        public BoletoController(IOptions<Configuration> cieloConfiguration)
+        public BankslipController(IOptions<Configuration> cieloConfiguration)
         {
             _cieloConfiguration = cieloConfiguration.Value;
             _paymentservice = new PaymentService(_cieloConfiguration);
         }
 
         [HttpPost]
-        [Route("Create/Bankslip")]
+        [Route("Create")]
         public IActionResult Create([FromBody]Transaction<Bankslip> transaction)
         {
             try

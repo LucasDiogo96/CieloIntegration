@@ -11,7 +11,7 @@ using System;
 namespace CreditCard.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CreditCardController : ControllerBase
     {
         protected internal Configuration _cieloConfiguration;
@@ -25,7 +25,7 @@ namespace CreditCard.Controllers
 
         //[Authorize]
         [HttpPost]
-        [Route("Create/CreditCard")]
+        [Route("Create")]
         public IActionResult Create([FromBody] Transaction<Domain.Entities.CreditCard> transaction)
         {
             try
