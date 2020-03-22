@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Callback", "Microservices\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Microservices\Authentication\Authentication.csproj", "{4751D067-4ABA-4385-A00C-67291DB6726C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B9BAEC19-91A6-4D00-BB85-DD02D65EDC11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{DD366622-C85A-4314-93A1-2E35659E57DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,10 @@ Global
 		{4751D067-4ABA-4385-A00C-67291DB6726C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4751D067-4ABA-4385-A00C-67291DB6726C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4751D067-4ABA-4385-A00C-67291DB6726C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD366622-C85A-4314-93A1-2E35659E57DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD366622-C85A-4314-93A1-2E35659E57DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD366622-C85A-4314-93A1-2E35659E57DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD366622-C85A-4314-93A1-2E35659E57DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +114,7 @@ Global
 		{E6660164-3D33-4775-B0A8-EDEC3A96EBD7} = {816122B1-3407-406C-B67A-FE7B2E804F68}
 		{F6080379-C365-46FD-B037-9EC4AE2B27B3} = {816122B1-3407-406C-B67A-FE7B2E804F68}
 		{4751D067-4ABA-4385-A00C-67291DB6726C} = {816122B1-3407-406C-B67A-FE7B2E804F68}
+		{DD366622-C85A-4314-93A1-2E35659E57DE} = {B9BAEC19-91A6-4D00-BB85-DD02D65EDC11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C36DBAD-09C0-424F-B9DE-3F4FB1DE3467}
