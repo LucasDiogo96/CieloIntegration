@@ -19,6 +19,8 @@ namespace Service
         public object Authenticate(string AppName, string AppKey)
         {
 
+            //Validate app key and app name here
+
             var now = DateTime.UtcNow;
 
             var claims = new Claim[]
