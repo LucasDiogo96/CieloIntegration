@@ -1,12 +1,12 @@
 using Domain.Entities;
+using Domain.Entities.BaseEntities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Callback
+namespace Authentication
 {
     public class Startup
     {
@@ -20,12 +20,12 @@ namespace Callback
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Configuration>(Configuration.GetSection("Cielo"));
+           
 
+            services.Configure<Audience>(Configuration.GetSection("Audience"));
+
+            services.AddOptions();
             services.AddControllers();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

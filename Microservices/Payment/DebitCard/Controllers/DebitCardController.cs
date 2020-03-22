@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using System;
 
 namespace DebitCard.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DebitCardController : ControllerBase

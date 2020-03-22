@@ -10,7 +10,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Bankslip/Create/",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/CreditCard/Create",
@@ -22,7 +26,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/CreditCard/Create",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/DebitCard/Create",
@@ -34,7 +42,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/DebitCard/Create",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Callback/{catchAll}",
@@ -46,7 +58,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Callback/{catchAll}",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Tokenization/{catchAll}",
@@ -58,7 +74,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Tokenization/{catchAll}",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Transaction/{catchAll}",
@@ -69,7 +89,23 @@
           "Port": 7006
         }
       ],
-      "UpstreamPathTemplate": "/api/Transaction/{catchAll}"
+      "UpstreamPathTemplate": "/api/Transaction/{catchAll}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "SecretKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Authentication/Authenticate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7007
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Authentication/Authenticate",
+      "UpstreamHttpMethod": [ "Post" ]
     }
   ],
   "GlobalConfiguration": {

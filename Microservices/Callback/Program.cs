@@ -23,7 +23,7 @@ namespace Callback
          .ConfigureAppConfiguration((host, config) => {
 
              var env = host.HostingEnvironment;
-             var sharedFolder = Path.Combine(env.ContentRootPath, "..\\..", "Shared");
+             var sharedFolder = Path.Combine(env.ContentRootPath, "..", "Shared");
              config
                  .AddJsonFile(Path.Combine(sharedFolder, "appsettings.json"), optional: true)
                  .AddJsonFile(Path.Combine(sharedFolder, $"appsettings.{env.EnvironmentName}.json"), optional: true);

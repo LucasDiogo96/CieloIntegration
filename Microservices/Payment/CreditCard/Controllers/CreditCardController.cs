@@ -1,7 +1,7 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,6 +11,7 @@ using System;
 
 namespace CreditCard.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CreditCardController : Controller

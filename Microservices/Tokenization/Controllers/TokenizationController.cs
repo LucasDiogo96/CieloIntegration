@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services;
@@ -8,6 +9,7 @@ using System;
 
 namespace CieloServices.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TokenizationController : ControllerBase

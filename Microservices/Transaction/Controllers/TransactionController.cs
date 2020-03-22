@@ -10,6 +10,7 @@ using System;
 
 namespace CieloServices.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
@@ -24,7 +25,6 @@ namespace CieloServices.API.Controllers
             _service = new TransactionService(_cieloConfiguration);
         }
 
-        //[Authorize]
         [HttpGet]
         [Route("Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -50,7 +50,6 @@ namespace CieloServices.API.Controllers
             catch (Exception ex)
             {
 
-
                 return BadRequest(new ResponseModel<TransactionResponseDetail>
                 {
                     response = new ResponseDataModel<TransactionResponseDetail> { success = false, message = ex.Message }
@@ -58,7 +57,6 @@ namespace CieloServices.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpDelete]
         [Route("Cancel")]
         public IActionResult Cancel([FromQuery]Guid Idtransaction)

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using System;
 
 namespace Boleto.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BankslipController : ControllerBase
@@ -30,7 +32,6 @@ namespace Boleto.Controllers
         {
             try
             {
-
                 TransactionResponseDetail result = _paymentservice.CreateTransactionBankslip(transaction);
 
                 return Ok(new ResponseModel<TransactionResponseDetail>
@@ -42,7 +43,6 @@ namespace Boleto.Controllers
                         message = result.HasError ? "Não foi possível efetuar a cobrança!" : "Boleto gerado com sucesso!"
                     }
                 });
-
             }
             catch (Exception ex)
             {
