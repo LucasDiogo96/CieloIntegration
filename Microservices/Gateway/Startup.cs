@@ -80,6 +80,7 @@ namespace GatewayAPI
 
             //app.UseAuthenticationMiddleware(config);
             app.UseAuthentication();
+            app.UseAuthorization();
             await app.UseOcelot();
 
         }
